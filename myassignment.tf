@@ -123,19 +123,25 @@ resource "aws_subnet" "subnet2" {
 }
 
 
-#####creating ec2 instence#####
-resource "aws_instance" "ec2" {
-  ami           = e8goyr8isfjdkl
-  instance_type = "t3.micro"
-  subnet_id   = aws_subnet.subnet2.id
+#####creating ec2 instence with key pair#####
+resource "aws_instance" "ec2_1" {
+   ami           = "ami-0c2b8ca1dad447f8a"
+   instance_type = "t2.micro"
+   subnet_id     = aws_subnet.subnet1.id
+   key_name = "dev-account"
+   tags = {
+     Name = "my first ec2"
+   }
+ }
+ 
+ resource "aws_instance" "ec2_1" {
+   ami           = "ami-0c2b8ca1dad447f8a"
+   instance_type = "t2.micro"
+   subnet_id     = aws_subnet.subnet2.id
+   key_name = "dev-account"
+   tags = {
+     Name = "my second ec2"
+   }
+ }
 
-  tags = {
-    Name = "my second ec2"
-  }
-}
 
-#####creatin key pair#######
-resource "aws_key_pair" "deployer" {
-  key_name   = "deployer-key"
-  public_key = " AAAAB3NzaC1yc2EAAA""
-}
